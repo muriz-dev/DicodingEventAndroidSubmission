@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">DicodingEventAndroidSubmission</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_upcoming">Upcoming</string>
+    <string name="menu_finished">Finished</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_fragment_default">This is home fragment</string>
+    <string name="upcoming_fragment_default">This is upcoming fragment</string>
+    <string name="finished_fragment_default">This is finished fragment</string>
 </resources>
