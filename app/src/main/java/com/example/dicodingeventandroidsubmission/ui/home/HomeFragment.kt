@@ -51,11 +51,23 @@ class HomeFragment : Fragment() {
                     val position = parent.getChildAdapterPosition(view)
                     val itemCount = state.itemCount
 
+                    val params = view.layoutParams
                     if (itemCount > 1) {
+                        val displayMetrics = resources.displayMetrics
+                        val cardWidth = (displayMetrics.widthPixels * 0.85).toInt()
+                        params.width = cardWidth
+
                         if (position < itemCount - 1) {
                             outRect.right = 32
+                        } else {
+                            outRect.right = 0
                         }
+                    } else {
+                        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+                        outRect.right = 0
                     }
+
+                    view.layoutParams = params
                 }
             })
         }
