@@ -1,7 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DicodingEventAndroidSubmission" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Latar belakang aplikasi menggunakan Aswad Black -->
+        <item name="android:windowBackground">@color/aswad_black</item>
+        <item name="colorSurface">@color/aswad_black</item>
+
+        <!-- Warna Utama (Button/Aksen) menggunakan Cala Benirrás Blue -->
+        <item name="colorPrimary">@color/cala_benirras</item>
+        <item name="colorOnPrimary">@color/aswad_black</item>
+
+        <!-- Warna Bottom Navigation Container menggunakan Volcanic Sand -->
+        <item name="colorSecondaryContainer">@color/volcanic_sand</item>
+        <item name="colorOnSecondaryContainer">@color/hoarfrost</item>
+
+        <!-- Warna teks utama -->
+        <item name="colorOnSurface">@color/hoarfrost</item>
+        <item name="colorOnSurfaceVariant">@color/hoarfrost</item>
     </style>
 </resources>

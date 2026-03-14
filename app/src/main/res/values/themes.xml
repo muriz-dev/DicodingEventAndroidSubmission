@@ -1,8 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DicodingEventAndroidSubmission" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Warna latar belakang aplikasi -->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+
+        <!-- Warna Button & Komponen Utama -->
+        <item name="colorPrimary">@color/snap_shot</item>
+        <item name="colorOnPrimary">@color/white</item> <!-- Teks di atas button -->
+
+        <!-- Warna Bottom Navigation & Container -->
+        <item name="colorSecondaryContainer">@color/alice_blue</item>
+        <item name="colorOnSecondaryContainer">@color/snap_shot</item>
+
+        <!-- Warna Pendukung -->
+        <item name="colorTertiary">@color/hoarfrost</item>
     </style>
 
     <style name="Theme.DicodingEventAndroidSubmission" parent="Base.Theme.DicodingEventAndroidSubmission" />
