@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
 
         binding.rvEventUpcomingList.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = adapterFinished
+            adapter = adapterUpcoming
             isNestedScrollingEnabled = false
 
             addItemDecoration(object : RecyclerView.ItemDecoration() {
@@ -57,7 +57,6 @@ class HomeFragment : Fragment() {
             })
         }
 
-        // 2. Setup RecyclerView Finished (Vertical)
         binding.rvEventFinishedList.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = adapterFinished
