@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DicodingEventAndroidSubmission</string>
+    <string name="app_title">Dicoding Event</string>
     <string name="menu_home">Home</string>
     <string name="menu_upcoming">Upcoming</string>
     <string name="menu_finished">Finished</string>
@@ -7,4 +8,12 @@
     <string name="home_fragment_default">This is home fragment</string>
     <string name="upcoming_fragment_default">This is upcoming fragment</string>
     <string name="finished_fragment_default">This is finished fragment</string>
+    <string name="owner_detail">Acara ini diselenggarakan oleh %1$s</string>
+    <string name="schedule_detail">%1$s - %2$s</string>
+    <string name="quota_detail">"%1$d kuota (%2$d terdaftar)"</string>
+    <string name="register">Daftar Sekarang</string>
+    <string name="finished_events">Finished Events</string>
+    <string name="finished_events_description">Event that have finished, hope you enjoyed!</string>
+    <string name="upcoming_events">Upcoming Events</string>
+    <string name="upcoming_events_description">Recomendation events for you, dont missed it!</string>
 </resources>
