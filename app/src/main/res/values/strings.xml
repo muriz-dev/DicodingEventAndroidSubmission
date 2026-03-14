@@ -16,4 +16,5 @@
     <string name="finished_events_description">Event that have finished, hope you enjoyed!</string>
     <string name="upcoming_events">Upcoming Events</string>
     <string name="upcoming_events_description">Recomendation events for you, dont missed it!</string>
+    <string name="title">Title</string>
 </resources>
