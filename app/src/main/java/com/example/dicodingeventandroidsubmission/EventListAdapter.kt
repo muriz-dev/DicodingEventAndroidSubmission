@@ -6,10 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.dicodingeventandroidsubmission.data.response.Event
 import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.ItemRowEventBinding
 
 class EventListAdapter: ListAdapter<ListEventsItem, EventListAdapter.MyViewHolder>(DIFF_CALLBACK) {
+    private lateinit var onItemClickCallback: OnItemClickCallback
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -21,6 +28,9 @@ class EventListAdapter: ListAdapter<ListEventsItem, EventListAdapter.MyViewHolde
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event)
+        holder.itemView.setOnClickListener {
+            onItemClickCallback.onItemClicked(event)
+        }
     }
 
     class MyViewHolder(private val binding: ItemRowEventBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -43,5 +53,9 @@ class EventListAdapter: ListAdapter<ListEventsItem, EventListAdapter.MyViewHolde
                 return oldItem == newItem
             }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(data: ListEventsItem)
     }
 }
