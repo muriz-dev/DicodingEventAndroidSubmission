@@ -1,5 +1,6 @@
 package com.example.dicodingeventandroidsubmission.ui.upcoming
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,9 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
+import com.example.dicodingeventandroidsubmission.data.response.Event
+import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentUpcomingBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.ViewModelFactory
+import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
 
 class UpcomingFragment : Fragment() {
 
@@ -60,6 +64,12 @@ class UpcomingFragment : Fragment() {
 
             isNestedScrollingEnabled = false
         }
+
+        eventAdapter.setOnItemClickCallback(object : EventListAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: ListEventsItem) {
+                onClickedItem(data)
+            }
+        })
     }
 
     private fun observeViewModel() {
@@ -80,5 +90,11 @@ class UpcomingFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun onClickedItem(event: ListEventsItem) {
+        val intent = Intent(requireContext(), DetailActivity::class.java)
+        intent.putExtra(DetailActivity.EXTRA_EVENT_ID, event.id.toString())
+        startActivity(intent)
     }
 }

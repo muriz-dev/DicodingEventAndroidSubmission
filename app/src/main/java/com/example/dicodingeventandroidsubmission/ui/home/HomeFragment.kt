@@ -1,5 +1,6 @@
 package com.example.dicodingeventandroidsubmission.ui.home
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
+import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentHomeBinding
+import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -69,6 +72,18 @@ class HomeFragment : Fragment() {
                 }
             })
         }
+
+        adapterUpcoming.setOnItemClickCallback(object : EventListAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: ListEventsItem) {
+                onClickedItem(data)
+            }
+        })
+
+        adapterFinished.setOnItemClickCallback(object : EventListAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: ListEventsItem) {
+                onClickedItem(data)
+            }
+        })
     }
 
     private fun observeViewModel() {
@@ -94,5 +109,11 @@ class HomeFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun onClickedItem(event: ListEventsItem) {
+        val intent = Intent(requireContext(), DetailActivity::class.java)
+        intent.putExtra(DetailActivity.EXTRA_EVENT_ID, event.id.toString())
+        startActivity(intent)
     }
 }
