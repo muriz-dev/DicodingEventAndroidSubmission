@@ -10,7 +10,7 @@
     <string name="finished_fragment_default">This is finished fragment</string>
     <string name="owner_detail">Acara ini diselenggarakan oleh %1$s</string>
     <string name="schedule_detail">%1$s - %2$s</string>
-    <string name="quota_detail">"%1$d kuota (%2$d terdaftar)"</string>
+    <string name="quota_detail">"%1$d kuota tersedia (%2$d terdaftar)"</string>
     <string name="register">Daftar Sekarang</string>
     <string name="finished_events">Finished Events</string>
     <string name="finished_events_description">Event that have finished, hope you enjoyed!</string>

@@ -66,7 +66,7 @@ class DetailActivity : AppCompatActivity() {
             tvOwner.text = getString(R.string.owner_detail, event.ownerName)
             tvLocation.text = event.cityName
             tvSchedule.text = getString(R.string.schedule_detail, event.beginTime, event.endTime)
-            tvQuota.text = getString(R.string.quota_detail, event.quota, event.registrants)
+            tvQuota.text = getString(R.string.quota_detail, event.quota - event.registrants, event.registrants)
 
             tvDescription.text = HtmlCompat.fromHtml(
                 event.description.toString(),
