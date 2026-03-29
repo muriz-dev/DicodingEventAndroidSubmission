@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 app:constraint_referenced_ids="
-                iv_thumbnail,tv_title,tv_owner,
+                iv_thumbnail,tv_title,iv_favorite_border,tv_owner,
                 iv_location,tv_location,iv_schedule,
                 tv_schedule,iv_quota,tv_quota,
                 tv_description,btn_register" />
@@ -46,17 +46,27 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_favorite_border"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_thumbnail"
                 tools:text="Title" />
+
+            <ImageView
+                android:id="@+id/iv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/round_location_on_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_owner" />
 
             <TextView
                 android:id="@+id/tv_owner"
@@ -72,14 +82,14 @@
                 tools:text="Owner" />
 
             <ImageView
-                android:id="@+id/iv_location"
+                android:id="@+id/iv_favorite_border"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/round_location_on_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_owner" />
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/round_favorite_border_32"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_thumbnail" />
 
             <TextView
                 android:id="@+id/tv_location"
