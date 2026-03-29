@@ -69,7 +69,7 @@ class DetailActivity : AppCompatActivity() {
             tvQuota.text = getString(R.string.quota_detail, event.quota - event.registrants, event.registrants)
 
             tvDescription.text = HtmlCompat.fromHtml(
-                event.description.toString(),
+                event.description,
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
