@@ -17,4 +17,10 @@
         <item name="colorOnSurface">@color/hoarfrost</item>
         <item name="colorOnSurfaceVariant">@color/hoarfrost</item>
     </style>
+
+    <style name="TextAppearance.MyApp.AppBar" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
 </resources>
