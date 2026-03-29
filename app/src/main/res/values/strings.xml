@@ -4,6 +4,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_upcoming">Upcoming</string>
     <string name="menu_finished">Finished</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_setting">Settings</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_fragment_default">This is home fragment</string>
     <string name="upcoming_fragment_default">This is upcoming fragment</string>
@@ -16,5 +19,7 @@
     <string name="finished_events_description">Event that have finished, hope you enjoyed!</string>
     <string name="upcoming_events">Upcoming Events</string>
     <string name="upcoming_events_description">Recomendation events for you, dont missed it!</string>
+    <string name="favorite_events">Favorite Events</string>
+    <string name="favorite_events_description">All your favorite events will be here</string>
     <string name="title">Title</string>
 </resources>
