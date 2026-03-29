@@ -10,14 +10,23 @@
         android:name="com.example.dicodingeventandroidsubmission.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
+    
     <fragment
-        android:id="@+id/profile_menu"
+        android:id="@+id/upcoming_menu"
         android:name="com.example.dicodingeventandroidsubmission.ui.upcoming.UpcomingFragment"
         android:label="UpcomingFragment"
         tools:layout="@layout/fragment_upcoming" />
+
     <fragment
-        android:id="@+id/setting_menu"
+        android:id="@+id/finished_menu"
         android:name="com.example.dicodingeventandroidsubmission.ui.finished.FinishedFragment"
         android:label="FinishedFragment"
         tools:layout="@layout/fragment_finished" />
+
+    <fragment
+        android:id="@+id/favorite_menu"
+        android:name="com.example.dicodingeventandroidsubmission.ui.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite" />
+
 </navigation>

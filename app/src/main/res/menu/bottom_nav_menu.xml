@@ -7,12 +7,18 @@
         android:icon="@drawable/round_home_24"/>
 
     <item
-        android:id="@+id/profile_menu"
+        android:id="@+id/upcoming_menu"
         android:title="@string/menu_upcoming"
         android:icon="@drawable/round_event_24"/>
 
     <item
-        android:id="@+id/setting_menu"
+        android:id="@+id/finished_menu"
         android:title="@string/menu_finished"
         android:icon="@drawable/round_event_available_24"/>
+
+    <item
+        android:id="@+id/favorite_menu"
+        android:title="@string/menu_favorite"
+        android:icon="@drawable/round_favorite_border_24" />
+
 </menu>
