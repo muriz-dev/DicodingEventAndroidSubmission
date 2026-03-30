@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DicodingEventAndroidSubmission">
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.setting.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.detail.DetailActivity"
             android:exported="false" />
         <activity
