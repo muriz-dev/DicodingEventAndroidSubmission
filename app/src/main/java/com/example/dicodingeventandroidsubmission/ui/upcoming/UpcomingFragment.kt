@@ -11,11 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
-import com.example.dicodingeventandroidsubmission.data.response.Event
 import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentUpcomingBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
-import com.example.dicodingeventandroidsubmission.ui.common.ViewModelFactory
+import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
 import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
 
 class UpcomingFragment : Fragment() {
@@ -23,7 +22,7 @@ class UpcomingFragment : Fragment() {
     private var _binding: FragmentUpcomingBinding? = null
     private val binding get() = _binding!!
     private val eventViewModel: EventViewModel by viewModels {
-        ViewModelFactory(1)
+        EventViewModelFactory(1)
     }
     private lateinit var eventAdapter: EventListAdapter
 
