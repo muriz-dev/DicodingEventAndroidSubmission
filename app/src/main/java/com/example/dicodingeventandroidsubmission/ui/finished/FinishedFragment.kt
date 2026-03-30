@@ -14,14 +14,14 @@ import com.example.dicodingeventandroidsubmission.EventListAdapter
 import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentFinishedBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
-import com.example.dicodingeventandroidsubmission.ui.common.ViewModelFactory
+import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
 import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
 
 class FinishedFragment : Fragment() {
     private var _binding: FragmentFinishedBinding? = null
     private val binding get() = _binding!!
     private val eventViewModel: EventViewModel by viewModels {
-        ViewModelFactory(0)
+        EventViewModelFactory(0)
     }
     private lateinit var eventAdapter: EventListAdapter
 
