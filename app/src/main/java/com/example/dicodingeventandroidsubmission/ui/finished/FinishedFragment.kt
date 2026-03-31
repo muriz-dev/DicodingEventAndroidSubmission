@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
-import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
+import com.example.dicodingeventandroidsubmission.data.Result
+import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
+import com.example.dicodingeventandroidsubmission.data.remote.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentFinishedBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
@@ -21,7 +24,7 @@ class FinishedFragment : Fragment() {
     private var _binding: FragmentFinishedBinding? = null
     private val binding get() = _binding!!
     private val eventViewModel: EventViewModel by viewModels {
-        EventViewModelFactory(0)
+        EventViewModelFactory.getInstance(requireActivity())
     }
     private lateinit var eventAdapter: EventListAdapter
 
@@ -62,7 +65,7 @@ class FinishedFragment : Fragment() {
             isNestedScrollingEnabled = false
 
             eventAdapter.setOnItemClickCallback(object : EventListAdapter.OnItemClickCallback {
-                override fun onItemClicked(data: ListEventsItem) {
+                override fun onItemClicked(data: EventsEntity) {
                     onClickedItem(data)
                 }
             })
@@ -70,13 +73,28 @@ class FinishedFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        eventViewModel.eventList.observe(viewLifecycleOwner) { eventsItems ->
-            eventAdapter.submitList(eventsItems)
-            binding.rvEventList.requestLayout()
-        }
+        eventViewModel.getEvents(0).observe(viewLifecycleOwner) { result ->
+            if (result != null) {
+                when(result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Result.Success -> {
+                        val eventsData = result.value
+                        eventAdapter.submitList(eventsData)
+                        binding.rvEventList.requestLayout()
 
-        eventViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        if (eventAdapter.itemCount == 0) {
+                            Toast.makeText(context, "Gagal memuat data: ${result.error}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -85,7 +103,7 @@ class FinishedFragment : Fragment() {
         _binding = null // Avoid memory leak
     }
 
-    private fun onClickedItem(event: ListEventsItem) {
+    private fun onClickedItem(event: EventsEntity) {
         val intent = Intent(requireContext(), DetailActivity::class.java)
         intent.putExtra(DetailActivity.EXTRA_EVENT_ID, event.id.toString())
         startActivity(intent)
