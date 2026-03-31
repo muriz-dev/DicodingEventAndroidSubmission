@@ -1,4 +1,4 @@
-package com.example.dicodingeventandroidsubmission.data.response
+package com.example.dicodingeventandroidsubmission.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
