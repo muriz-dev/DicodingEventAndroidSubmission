@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dicodingeventandroidsubmission.data.response.Event
-import com.example.dicodingeventandroidsubmission.data.response.ListEventsItem
+import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.ItemRowEventBinding
 
-class EventListAdapter: ListAdapter<ListEventsItem, EventListAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class EventListAdapter: ListAdapter<EventsEntity, EventListAdapter.MyViewHolder>(DIFF_CALLBACK) {
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -34,7 +33,7 @@ class EventListAdapter: ListAdapter<ListEventsItem, EventListAdapter.MyViewHolde
     }
 
     class MyViewHolder(private val binding: ItemRowEventBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: ListEventsItem){
+        fun bind(event: EventsEntity){
             val context = binding.root.context
             Glide.with(context)
                 .load(event.mediaCover)
@@ -44,18 +43,18 @@ class EventListAdapter: ListAdapter<ListEventsItem, EventListAdapter.MyViewHolde
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListEventsItem>() {
-            override fun areItemsTheSame(oldItem: ListEventsItem, newItem: ListEventsItem): Boolean {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EventsEntity>() {
+            override fun areItemsTheSame(oldItem: EventsEntity, newItem: EventsEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: ListEventsItem, newItem: ListEventsItem): Boolean {
+            override fun areContentsTheSame(oldItem: EventsEntity, newItem: EventsEntity): Boolean {
                 return oldItem == newItem
             }
         }
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: ListEventsItem)
+        fun onItemClicked(data: EventsEntity)
     }
 }
