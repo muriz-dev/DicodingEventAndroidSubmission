@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +15,8 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
-import com.example.dicodingeventandroidsubmission.data.response.Event
+import com.example.dicodingeventandroidsubmission.data.Result
+import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
@@ -23,7 +26,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityDetailBinding
-    private val detailViewModel: DetailViewModel by viewModels()
+    private val detailViewModel: DetailViewModel by viewModels {
+        DetailViewModelFactory.getInstance(this@DetailActivity)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,36 +45,56 @@ class DetailActivity : AppCompatActivity() {
         val eventId = intent.getStringExtra(EXTRA_EVENT_ID)
 
         if (eventId != null) {
-            detailViewModel.getEventDetail(eventId)
+            observeViewModel(eventId.toInt())
+        } else {
+            Toast.makeText(this, "Invalid Event ID", Toast.LENGTH_SHORT).show()
+            finish()
         }
-
-        observeViewModel()
     }
 
-    private fun observeViewModel() {
-        detailViewModel.eventDetail.observe(this) { event ->
-            if (event != null) {
-                displayEventData(event)
+    private fun observeViewModel(eventId: Int) {
+        detailViewModel.getEventDetail(eventId).observe(this) { result ->
+            if (result != null) {
+                when(result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is Result.Success -> {
+                        val eventData = result.value
+                        displayEventData(eventData)
+
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            this@DetailActivity,
+                            "Terjadi kesalahan" + result.error,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
         }
-
-        detailViewModel.isLoading.observe(this) { isLoading ->
-            showLoading(isLoading)
-
-            binding.contentGroup.visibility = if (isLoading) View.GONE else View.VISIBLE
-        }
     }
 
-    private fun displayEventData(event: Event) {
+    private fun displayEventData(event: EventsEntity) {
+        val eventQuota = event.quota ?: 0
+        val eventRegistrants = event.registrants ?: 0
+        val quotaRemain = eventQuota - eventRegistrants
+
         binding.apply {
             tvTitle.text = event.name
-            tvOwner.text = getString(R.string.owner_detail, event.ownerName)
-            tvLocation.text = event.cityName
-            tvSchedule.text = getString(R.string.schedule_detail, event.beginTime, event.endTime)
-            tvQuota.text = getString(R.string.quota_detail, event.quota - event.registrants, event.registrants)
-
+            tvOwner.text = getString(R.string.owner_detail, event.ownerName ?: "Unknown")
+            tvLocation.text = event.cityName ?: "No Location"
+            tvSchedule.text = getString(
+                R.string.schedule_detail,
+                event.beginTime ?: "No Schedule",
+                event.endTime ?: "No Schedule"
+            )
+            tvQuota.text = getString(R.string.quota_detail, quotaRemain, eventRegistrants)
             tvDescription.text = HtmlCompat.fromHtml(
-                event.description,
+                event.description ?: "There is no description for this event.",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
 
@@ -77,19 +102,36 @@ class DetailActivity : AppCompatActivity() {
 
             Glide.with(this@DetailActivity)
                 .load(event.mediaCover)
+                .placeholder(R.drawable.round_image_24)
+                .error(R.drawable.round_broken_image_24)
                 .into(ivThumbnail)
 
-            binding.btnRegister.setOnClickListener {
-                val link = event.link
+            val icon = if (event.isFavorite) R.drawable.round_favorite_24 else R.drawable.round_favorite_border_24
+            ivFavorite.setImageResource(icon)
+
+            ivFavorite.setOnClickListener {
+                onFavoriteClick(event)
+            }
+
+            btnRegister.setOnClickListener {
+                val link = event.link ?: ""
                 if (link.isNotEmpty()) {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
                     startActivity(intent)
+                } else {
+                    Toast.makeText(this@DetailActivity, "Link pendaftaran tidak tersedia", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    private fun onFavoriteClick(event: EventsEntity) {
+        if (event.isFavorite) {
+            detailViewModel.deleteFromFavorite(event)
+            Toast.makeText(this, "Event berhasil dihapus dari favorit", Toast.LENGTH_SHORT).show()
+        } else {
+            detailViewModel.saveToFavorite(event)
+            Toast.makeText(this, "Event berhasil ditambahkan ke favorit", Toast.LENGTH_SHORT).show()
+        }
     }
 }
