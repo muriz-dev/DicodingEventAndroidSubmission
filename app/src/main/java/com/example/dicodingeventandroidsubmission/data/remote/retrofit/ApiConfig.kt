@@ -1,4 +1,4 @@
-package com.example.dicodingeventandroidsubmission.data.retrofit
+package com.example.dicodingeventandroidsubmission.data.remote.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
