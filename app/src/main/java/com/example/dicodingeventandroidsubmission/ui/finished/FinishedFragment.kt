@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
 import com.example.dicodingeventandroidsubmission.data.Result
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
-import com.example.dicodingeventandroidsubmission.data.remote.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentFinishedBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory

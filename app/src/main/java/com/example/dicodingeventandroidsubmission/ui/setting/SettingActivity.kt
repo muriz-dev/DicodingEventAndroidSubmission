@@ -1,7 +1,6 @@
 package com.example.dicodingeventandroidsubmission.ui.setting
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider

@@ -1,6 +1,5 @@
 package com.example.dicodingeventandroidsubmission.data.local.entity
 
-import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
