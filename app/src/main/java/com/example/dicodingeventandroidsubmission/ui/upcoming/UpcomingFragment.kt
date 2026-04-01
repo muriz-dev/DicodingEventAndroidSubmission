@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
 import com.example.dicodingeventandroidsubmission.data.Result
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
-import com.example.dicodingeventandroidsubmission.data.remote.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.databinding.FragmentUpcomingBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
@@ -79,17 +78,17 @@ class UpcomingFragment : Fragment() {
             if (result != null) {
                 when(result) {
                     is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showLoading(true)
                     }
                     is Result.Success -> {
                         val eventsData = result.value
                         eventAdapter.submitList(eventsData)
                         binding.rvEventList.requestLayout()
 
-                        binding.progressBar.visibility = View.GONE
+                        showLoading(false)
                     }
                     is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        showLoading(true)
 
                         if (eventAdapter.itemCount == 0) {
                             Toast.makeText(context, "Gagal memuat data: ${result.error}", Toast.LENGTH_SHORT).show()

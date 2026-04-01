@@ -2,10 +2,8 @@ package com.example.dicodingeventandroidsubmission.ui.detail
 
 import com.example.dicodingeventandroidsubmission.R
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -18,10 +16,10 @@ import com.bumptech.glide.Glide
 import com.example.dicodingeventandroidsubmission.data.Result
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.ActivityDetailBinding
+import androidx.core.net.toUri
 
 class DetailActivity : AppCompatActivity() {
     companion object {
-        private const val TAG = "DetailActivity"
         const val EXTRA_EVENT_ID = "extra_id"
     }
 
@@ -57,16 +55,17 @@ class DetailActivity : AppCompatActivity() {
             if (result != null) {
                 when(result) {
                     is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showLoading(true)
                     }
                     is Result.Success -> {
                         val eventData = result.value
                         displayEventData(eventData)
 
-                        binding.progressBar.visibility = View.GONE
+                        showLoading(false)
                     }
                     is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        showLoading(true)
+
                         Toast.makeText(
                             this@DetailActivity,
                             "Terjadi kesalahan" + result.error,
@@ -116,13 +115,17 @@ class DetailActivity : AppCompatActivity() {
             btnRegister.setOnClickListener {
                 val link = event.link ?: ""
                 if (link.isNotEmpty()) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                    val intent = Intent(Intent.ACTION_VIEW, link.toUri())
                     startActivity(intent)
                 } else {
                     Toast.makeText(this@DetailActivity, "Link pendaftaran tidak tersedia", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun onFavoriteClick(event: EventsEntity) {
