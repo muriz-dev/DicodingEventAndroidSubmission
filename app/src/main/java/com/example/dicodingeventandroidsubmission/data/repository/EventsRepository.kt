@@ -83,6 +83,48 @@ class EventsRepository private constructor(
         emitSource(localData)
     }
 
+    fun getRandomSuggestions(): LiveData<Result<List<EventsEntity>>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+        val localData: LiveData<Result<List<EventsEntity>>> = eventsDao.getRandomSuggestions().map { Result.Success(it) }
+        emitSource(localData)
+    }
+
+    fun searchEvents(query: String): LiveData<Result<List<EventsEntity>>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
+
+        try {
+            val response = apiService.getEventSearch(-1, query)
+            val events = response.listEvents
+
+            val eventsList = events.map { event ->
+                val isUpcomingStatus = eventsDao.isEventsUpcoming(event.id)
+                val isFavorite = eventsDao.isEventsFavorite(event.id)
+                EventsEntity(
+                    event.id,
+                    event.name,
+                    event.ownerName,
+                    event.cityName,
+                    event.beginTime,
+                    event.endTime,
+                    event.quota,
+                    event.registrants,
+                    event.description,
+                    event.mediaCover,
+                    event.link,
+                    isUpcomingStatus,
+                    isFavorite
+                )
+            }
+
+            eventsDao.insertEvents(eventsList)
+        } catch (e: Exception) {
+            Log.e("EventsRepository", "searchEvents: ${e.message}")
+        }
+
+        val localData: LiveData<Result<List<EventsEntity>>> = eventsDao.getEventByName(query).map { Result.Success(it) }
+        emitSource(localData)
+    }
+
     fun getEventDetail(id: Int): LiveData<Result<EventsEntity>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
 
