@@ -25,6 +25,12 @@ interface EventsDao {
     @Query("SELECT * FROM Events WHERE id = :id")
     fun getEventById(id: Int): LiveData<EventsEntity>
 
+    @Query("SELECT * FROM Events WHERE name LIKE '%' || :name || '%'")
+    fun getEventByName(name: String): LiveData<List<EventsEntity>>
+
+    @Query("SELECT * FROM Events ORDER BY RANDOM() LIMIT 5")
+    fun getRandomSuggestions(): LiveData<List<EventsEntity>>
+
     @Query("SELECT * FROM Events WHERE id = :id")
     suspend fun getEventByIdSync(id: Int): EventsEntity?
 
@@ -42,6 +48,9 @@ interface EventsDao {
 
     @Query("DELETE FROM Events WHERE isFavorite = 0 AND isUpcoming = :isUpcoming")
     suspend fun deleteNonFavoriteEventsByStatus(isUpcoming: Boolean)
+
+    @Query("SELECT EXISTS(SELECT * FROM Events WHERE id = :id AND isUpcoming = 1)")
+    suspend fun isEventsUpcoming(id: Int): Boolean
 
     @Query("SELECT EXISTS(SELECT * FROM Events WHERE id = :id AND isFavorite = 1)")
     suspend fun isEventsFavorite(id: Int): Boolean
