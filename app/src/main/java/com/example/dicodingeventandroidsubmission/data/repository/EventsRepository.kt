@@ -7,6 +7,7 @@ import androidx.lifecycle.map
 import com.example.dicodingeventandroidsubmission.data.Result
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.data.local.room.EventsDao
+import com.example.dicodingeventandroidsubmission.data.remote.response.ListEventsItem
 import com.example.dicodingeventandroidsubmission.data.remote.retrofit.ApiService
 import kotlinx.coroutines.Dispatchers
 
@@ -170,4 +171,21 @@ class EventsRepository private constructor(
         event.isFavorite = favoriteState
         eventsDao.updateEvent(event)
     }
+
+    suspend fun getDailyReminderEvent(): ListEventsItem? {
+        return try {
+            val response = apiService.getOneActiveEvent()
+            val listEvents = response.listEvents
+
+            if (listEvents.isNotEmpty()) {
+                listEvents[0]
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("EventRepository", "getDailyReminderEvent: ${e.message}")
+            null
+        }
+    }
+
 }
