@@ -20,4 +20,10 @@ interface ApiService {
         @Query("active") active: Int = -1,
         @Query("q") query: String
     ): EventListResponse
+
+    @GET("events")
+    suspend fun getOneActiveEvent(
+        @Query("active") active: Int = 1,
+        @Query("limit") limit: Int = 1
+    ): EventListResponse
 }
