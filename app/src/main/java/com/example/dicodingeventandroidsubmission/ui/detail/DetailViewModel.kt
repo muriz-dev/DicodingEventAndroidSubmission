@@ -7,10 +7,6 @@ import com.example.dicodingeventandroidsubmission.data.repository.EventsReposito
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val eventsRepository: EventsRepository) : ViewModel() {
-    companion object {
-        private const val TAG = "DetailViewModel"
-    }
-
     fun getEventDetail(eventId: Int) = eventsRepository.getEventDetail(eventId)
 
     fun saveToFavorite(event: EventsEntity) {
