@@ -77,17 +77,17 @@ class FavoriteFragment : Fragment() {
             if (result != null) {
                 when(result) {
                     is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        showLoading(true)
                     }
                     is Result.Success -> {
                         val eventsData = result.value
                         eventAdapter.submitList(eventsData)
                         binding.rvEventList.requestLayout()
 
-                        binding.progressBar.visibility = View.GONE
+                        showLoading(false)
                     }
                     is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                        showLoading(false)
 
                         if (eventAdapter.itemCount == 0) {
                             Toast.makeText(context, "Gagal memuat data: ${result.error}", Toast.LENGTH_SHORT).show()
@@ -101,6 +101,10 @@ class FavoriteFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Avoid memory leak
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun onClickedItem(event: EventsEntity) {
