@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.glide)
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
 
     // Test
     testImplementation(libs.junit)
