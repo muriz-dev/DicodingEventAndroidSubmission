@@ -12,12 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
-import com.example.dicodingeventandroidsubmission.data.Result
+import com.example.dicodingeventandroidsubmission.data.handle
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.FragmentHomeBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
 import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
+import com.example.dicodingeventandroidsubmission.utils.showLoading
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -106,61 +107,51 @@ class HomeFragment : Fragment() {
 
     private fun observeViewModel() {
         eventViewModel.getEvents(1).observe(viewLifecycleOwner) { result ->
-            if (result != null) {
-                when(result) {
-                    is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                    is Result.Success -> {
-                        val eventsData = result.value
-                        adapterUpcoming.submitList(eventsData.take(5))
-                        binding.rvEventUpcomingList.requestLayout()
+            result?.handle(
+                onLoading = {
+                    binding.progressBar.showLoading(true)
+                },
+                onSuccess = { data ->
+                    adapterUpcoming.submitList(data)
+                    binding.rvEventUpcomingList.requestLayout()
 
-                        binding.progressBar.visibility = View.GONE
-                    }
-                    is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                    binding.progressBar.showLoading(false)
+                },
+                onError = {
+                    binding.progressBar.showLoading(false)
 
-                        if (adapterUpcoming.itemCount == 0) {
-                            Toast.makeText(context, "Koneksi terganggu: ${result.error}", Toast.LENGTH_SHORT).show()
-                        }
+                    if (adapterUpcoming.itemCount == 0) {
+                        Toast.makeText(context, "Gagal memuat data: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
+            )
         }
 
         eventViewModel.getEvents(0).observe(viewLifecycleOwner) { result ->
-            if (result != null) {
-                when(result) {
-                    is Result.Loading -> {
-                        showLoading(true)
-                    }
-                    is Result.Success -> {
-                        val eventsData = result.value
-                        adapterFinished.submitList(eventsData.take(5))
-                        binding.rvEventFinishedList.requestLayout()
+            result?.handle(
+                onLoading = {
+                    binding.progressBar.showLoading(true)
+                },
+                onSuccess = { data ->
+                    adapterFinished.submitList(data)
+                    binding.rvEventFinishedList.requestLayout()
 
-                        showLoading(false)
-                    }
-                    is Result.Error -> {
-                        showLoading(false)
+                    binding.progressBar.showLoading(false)
+                },
+                onError = {
+                    binding.progressBar.showLoading(false)
 
-                        if (adapterFinished.itemCount == 0) {
-                            Toast.makeText(context, "Gagal memuat data: ${result.error}", Toast.LENGTH_SHORT).show()
-                        }
+                    if (adapterFinished.itemCount == 0) {
+                        Toast.makeText(context, "Gagal memuat data: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
+            )
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Avoid memory leak
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun onClickedItem(event: EventsEntity) {

@@ -12,12 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
-import com.example.dicodingeventandroidsubmission.data.Result
+import com.example.dicodingeventandroidsubmission.data.handle
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.FragmentFinishedBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
 import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
+import com.example.dicodingeventandroidsubmission.utils.showLoading
 
 class FinishedFragment : Fragment() {
     private var _binding: FragmentFinishedBinding? = null
@@ -73,27 +74,24 @@ class FinishedFragment : Fragment() {
 
     private fun observeViewModel() {
         eventViewModel.getEvents(0).observe(viewLifecycleOwner) { result ->
-            if (result != null) {
-                when(result) {
-                    is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                    is Result.Success -> {
-                        val eventsData = result.value
-                        eventAdapter.submitList(eventsData)
-                        binding.rvEventList.requestLayout()
+            result?.handle(
+                onLoading = {
+                    binding.progressBar.showLoading(true)
+                },
+                onSuccess = { data ->
+                    eventAdapter.submitList(data)
+                    binding.rvEventList.requestLayout()
 
-                        binding.progressBar.visibility = View.GONE
-                    }
-                    is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
+                    binding.progressBar.showLoading(false)
+                },
+                onError = {
+                    binding.progressBar.showLoading(false)
 
-                        if (eventAdapter.itemCount == 0) {
-                            Toast.makeText(context, "Gagal memuat data: ${result.error}", Toast.LENGTH_SHORT).show()
-                        }
+                    if (eventAdapter.itemCount == 0) {
+                        Toast.makeText(context, "Gagal memuat data: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
+            )
         }
     }
 

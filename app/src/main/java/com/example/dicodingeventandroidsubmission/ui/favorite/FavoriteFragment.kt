@@ -12,12 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventandroidsubmission.EventListAdapter
-import com.example.dicodingeventandroidsubmission.data.Result
+import com.example.dicodingeventandroidsubmission.data.handle
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.FragmentFavoriteBinding
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModel
 import com.example.dicodingeventandroidsubmission.ui.common.EventViewModelFactory
 import com.example.dicodingeventandroidsubmission.ui.detail.DetailActivity
+import com.example.dicodingeventandroidsubmission.utils.showLoading
 import kotlin.getValue
 
 class FavoriteFragment : Fragment() {
@@ -74,37 +75,30 @@ class FavoriteFragment : Fragment() {
 
     private fun observeViewModel() {
         eventViewModel.getFavoriteEvents().observe(viewLifecycleOwner) { result ->
-            if (result != null) {
-                when(result) {
-                    is Result.Loading -> {
-                        showLoading(true)
-                    }
-                    is Result.Success -> {
-                        val eventsData = result.value
-                        eventAdapter.submitList(eventsData)
-                        binding.rvEventList.requestLayout()
+            result?.handle(
+                onLoading = {
+                    binding.progressBar.showLoading(true)
+                },
+                onSuccess = { data ->
+                    eventAdapter.submitList(data)
+                    binding.rvEventList.requestLayout()
 
-                        showLoading(false)
-                    }
-                    is Result.Error -> {
-                        showLoading(false)
+                    binding.progressBar.showLoading(false)
+                },
+                onError = {
+                    binding.progressBar.showLoading(false)
 
-                        if (eventAdapter.itemCount == 0) {
-                            Toast.makeText(context, "Gagal memuat data: ${result.error}", Toast.LENGTH_SHORT).show()
-                        }
+                    if (eventAdapter.itemCount == 0) {
+                        Toast.makeText(context, "Gagal memuat data: $it", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
+            )
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null // Avoid memory leak
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun onClickedItem(event: EventsEntity) {
