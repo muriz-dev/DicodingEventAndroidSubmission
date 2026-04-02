@@ -8,14 +8,19 @@
     <string name="menu_search">Search</string>
     <string name="menu_setting">Settings</string>
     <string name="setting_dark_mode">Dark Mode</string>
+    <string name="card_image">Card Image</string>
+    <string name="event_thumbnail">Event Thumbnail</string>
+    <string name="location_icon">Location Icon</string>
+    <string name="favorite_icon">Favorite Icon</string>
+    <string name="schedule_icon">Schedule Icon</string>
+    <string name="quota_icon">Quota Icon</string>
     <string name="setting_daily_reminder">Daily Reminder</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home_fragment_default">This is home fragment</string>
-    <string name="upcoming_fragment_default">This is upcoming fragment</string>
-    <string name="finished_fragment_default">This is finished fragment</string>
     <string name="owner_detail">Acara ini diselenggarakan oleh %1$s</string>
     <string name="schedule_detail">%1$s - %2$s</string>
-    <string name="quota_detail">"%1$d kuota tersedia (%2$d terdaftar)"</string>
+    <plurals name="quota_detail">
+        <item quantity="one">%1$d kuota tersedia (%2$d terdaftar)</item>
+        <item quantity="other">%1$d kuota tersedia (%2$d terdaftar)</item>
+    </plurals>
     <string name="register">Daftar Sekarang</string>
     <string name="finished_events">Finished Events</string>
     <string name="finished_events_description">Event that have finished, hope you enjoyed!</string>
@@ -23,6 +28,8 @@
     <string name="upcoming_events_description">Recomendation events for you, dont missed it!</string>
     <string name="favorite_events">Favorite Events</string>
     <string name="favorite_events_description">All your favorite events will be here</string>
+    <string name="save_favorite_success">Event berhasil ditambahkan ke favorit</string>
+    <string name="delete_favorite_success">Event berhasil dihapus dari favorit</string>
     <string name="title">Title</string>
     <string name="searchbar_hint">Masukkan judul acara</string>
     <string name="empty_search">Data event tidak ditemukan</string>
