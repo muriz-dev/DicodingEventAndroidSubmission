@@ -45,11 +45,7 @@ class DailyReminderWorker(context: Context, workerParams: WorkerParameters) : Co
             addNextIntentWithParentStack(detailIntent)
             getPendingIntent(
                 0,
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                } else {
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                }
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
         }
 
