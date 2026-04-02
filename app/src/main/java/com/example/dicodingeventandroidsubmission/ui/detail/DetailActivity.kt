@@ -12,11 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
 import com.example.dicodingeventandroidsubmission.data.Result
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.ActivityDetailBinding
 import androidx.core.net.toUri
+import com.example.dicodingeventandroidsubmission.utils.loadImage
 
 class DetailActivity : AppCompatActivity() {
     companion object {
@@ -91,7 +91,12 @@ class DetailActivity : AppCompatActivity() {
                 event.beginTime ?: "No Schedule",
                 event.endTime ?: "No Schedule"
             )
-            tvQuota.text = getString(R.string.quota_detail, quotaRemain, eventRegistrants)
+            tvQuota.text = resources.getQuantityString(
+                R.plurals.quota_detail,
+                quotaRemain,
+                quotaRemain,
+                eventRegistrants
+            )
             tvDescription.text = HtmlCompat.fromHtml(
                 event.description ?: "There is no description for this event.",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
@@ -99,11 +104,7 @@ class DetailActivity : AppCompatActivity() {
 
             tvDescription.movementMethod = LinkMovementMethod.getInstance()
 
-            Glide.with(this@DetailActivity)
-                .load(event.mediaCover)
-                .placeholder(R.drawable.round_image_24)
-                .error(R.drawable.round_broken_image_24)
-                .into(ivThumbnail)
+            ivThumbnail.loadImage(event.mediaCover)
 
             val icon = if (event.isFavorite) R.drawable.round_favorite_24 else R.drawable.round_favorite_border_24
             ivFavorite.setImageResource(icon)
@@ -131,10 +132,10 @@ class DetailActivity : AppCompatActivity() {
     private fun onFavoriteClick(event: EventsEntity) {
         if (event.isFavorite) {
             detailViewModel.deleteFromFavorite(event)
-            Toast.makeText(this, "Event berhasil dihapus dari favorit", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.delete_favorite_success), Toast.LENGTH_SHORT).show()
         } else {
             detailViewModel.saveToFavorite(event)
-            Toast.makeText(this, "Event berhasil ditambahkan ke favorit", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.save_favorite_success), Toast.LENGTH_SHORT).show()
         }
     }
 }
