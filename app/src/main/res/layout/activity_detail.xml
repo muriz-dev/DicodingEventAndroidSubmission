@@ -38,7 +38,7 @@
                 android:id="@+id/iv_thumbnail"
                 android:layout_width="0dp"
                 android:layout_height="250dp"
-                android:contentDescription="Event Thumbnail"
+                android:contentDescription="@string/event_thumbnail"
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:contentDescription="Location Icon"
+                android:contentDescription="@string/location_icon"
                 android:src="@drawable/round_location_on_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_owner" />
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:contentDescription="Favorite Icon"
+                android:contentDescription="@string/favorite_icon"
                 android:src="@drawable/round_favorite_border_32"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_title" />
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:contentDescription="Schedule Icon"
+                android:contentDescription="@string/schedule_icon"
                 android:src="@drawable/round_event_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_location" />
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:contentDescription="Quota Icon"
+                android:contentDescription="@string/quota_icon"
                 android:src="@drawable/round_people_alt_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_schedule" />
