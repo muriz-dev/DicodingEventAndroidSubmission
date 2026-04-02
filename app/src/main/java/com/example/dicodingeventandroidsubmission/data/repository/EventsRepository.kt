@@ -68,8 +68,6 @@ class EventsRepository private constructor(
             eventsDao.deleteNonFavoriteEventsByStatus(isUpcomingStatus)
             eventsDao.insertEvents(eventsList)
         } catch (e: Exception) {
-            Log.e("EventsRepository", "getEvents: ${e.message.toString()} ")
-
             if (currentLocalData.isEmpty()) {
                 emit(Result.Error("Tidak ada koneksi internet. Silakan coba lagi nanti."))
             }
