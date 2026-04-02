@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.dicodingeventandroidsubmission.data.local.entity.EventsEntity
 import com.example.dicodingeventandroidsubmission.databinding.ItemRowEventBinding
+import com.example.dicodingeventandroidsubmission.utils.loadImage
 
 class EventListAdapter: ListAdapter<EventsEntity, EventListAdapter.MyViewHolder>(DIFF_CALLBACK) {
     private lateinit var onItemClickCallback: OnItemClickCallback
@@ -34,10 +34,7 @@ class EventListAdapter: ListAdapter<EventsEntity, EventListAdapter.MyViewHolder>
 
     class MyViewHolder(private val binding: ItemRowEventBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: EventsEntity){
-            val context = binding.root.context
-            Glide.with(context)
-                .load(event.mediaCover)
-                .into(binding.ivItemCover)
+            binding.ivItemCover.loadImage(event.mediaCover)
             binding.tvItemTitle.text = event.name
         }
     }
